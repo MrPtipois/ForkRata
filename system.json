@@ -51,8 +51,7 @@
   "gridUnits": "m",
   "primaryTokenAttribute": "pv",
   "secondaryTokenAttribute": "pc",
-  "url": "",
-  "manifest": "",
-  "download": "",
+  "url": "https://gitlab.com/jvir/foundry-ratasenlasparedes/",
+  "manifest": "https://gitlab.com/jvir/foundry-ratasenlasparedes/-/raw/master/system.json",
   "license": "LICENSE.txt"
 }
