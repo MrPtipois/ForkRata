@@ -1,0 +1,82 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "templates": {
+      "base": {
+        "pc": {
+          "value": 0,
+          "min": 0,
+          "max": 0
+        },
+        "pv": {
+          "value": 0,
+          "min": 0,
+          "max": 0
+        }
+        ,
+        "pe": {
+          "value": 0,
+          "min": 0
+        }
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "profesion": "",
+      "reputation": "",
+      "biography": "",
+      "attributes": {
+        "level": {
+          "value": 1
+        }
+      },
+      "abilities": {
+        "des": {
+          "value": 0
+        },
+        "ing": {
+          "value": 0
+        },
+        "mus": {
+          "value": 0
+        },
+        "vio": {
+          "value": 0
+        },
+        "vol": {
+          "value": 0
+        }
+      }
+    }
+  },
+  "Item": {
+    "types": ["item", "weapon", "spell", "armor", "mean", "scar"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "weapon": {
+        "templates": ["base"],
+        "damage": "1d6"
+    },
+    "armor": {
+        "templates": ["base"],
+        "protection": "0"
+    },
+    "mean": {
+        "templates": ["base"],
+        "type": "",
+        "rollable": 0,
+        "roll": ""
+    },
+    "Scar": {
+        "templates": ["base"]
+    }
+  }
+}
