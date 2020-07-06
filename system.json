@@ -53,5 +53,6 @@
   "secondaryTokenAttribute": "pc",
   "url": "https://gitlab.com/jvir/foundry-ratasenlasparedes/",
   "manifest": "https://gitlab.com/jvir/foundry-ratasenlasparedes/-/raw/master/system.json",
+  "download": "https://gitlab.com/jvir/foundry-ratasenlasparedes/-/archive/master/foundry-ratasenlasparedes-master.zip",
   "license": "LICENSE.txt"
 }
