@@ -29,6 +29,15 @@ export class ratasenlasparedesActor extends Actor {
     data.pv.max = 10 + data.abilities.mus.value;
     data.pc.max = 10 + data.abilities.vol.value;
     
+    
+    let profesions = actorData.items.filter(i => i.type == "profesion");
+    if (profesions.length>0) data.profesion = profesions[0].name;
+    let reputations = actorData.items.filter(i => i.type == "reputation");
+    if (reputations.length>0) data.reputation = reputations[0].name;
+    //console.log(profesions);
+    
   }
+  
+
 
 }

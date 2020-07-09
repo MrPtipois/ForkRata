@@ -45,3 +45,17 @@ Hooks.once('init', async function() {
     return str.toLowerCase();
   });
 });
+
+Hooks.on('createOwnedItem', (actor, item) => {
+    //console.log(actor);
+    //console.log(item);
+    let profesions = actor.data.items.filter(i => i.type == "profesion");
+    let reputations = actor.data.items.filter(i => i.type == "reputation");
+    console.log(profesions);
+    if(item.type == "profesion" && profesions.length>1){
+        actor.deleteOwnedItem(profesions[0]._id);
+    }
+    if(item.type == "reputation" && reputations.length>1){
+        actor.deleteOwnedItem(reputations[0]._id);
+    }
+});

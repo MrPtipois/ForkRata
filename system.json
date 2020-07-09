@@ -2,7 +2,7 @@
   "name": "ratasenlasparedes",
   "title": "Ratas en las paredes",
   "description": "Ratas en las paredes para FoundryVTT!",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "minimumCoreVersion": "0.6.2",
   "compatibleCoreVersion": "0.6.4",
   "templateVersion": 2,
@@ -30,6 +30,20 @@
 			"label": "Equipo",
 			"system": "ratasenlasparedes",
 			"path": "./packs/equipo.db",
+			"entity": "Item"
+		},
+		        {
+			"name": "profesiones",
+			"label": "Profesiones",
+			"system": "ratasenlasparedes",
+			"path": "./packs/profesiones.db",
+			"entity": "Item"
+		},
+		        {
+			"name": "reputaciones",
+			"label": "Reputaciones",
+			"system": "ratasenlasparedes",
+			"path": "./packs/reputaciones.db",
 			"entity": "Item"
 		},
 		        {

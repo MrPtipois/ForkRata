@@ -50,10 +50,15 @@
     }
   },
   "Item": {
-    "types": ["item", "weapon", "spell", "armor", "mean", "scar"],
+    "types": ["item", "weapon", "spell", "armor", "mean", "scar", "profesion", "reputation"],
     "templates": {
       "base": {
         "description": ""
+      },
+      "effect": {
+        "tipo": "",
+        "campo": "",
+        "valor": 0
       }
     },
     "item": {
@@ -75,7 +80,13 @@
         "rollable": 0,
         "roll": ""
     },
-    "Scar": {
+    "scar": {
+        "templates": ["base"]
+    },
+    "profesion": {
+        "templates": ["base"]
+    },
+    "reputation": {
         "templates": ["base"]
     }
   }

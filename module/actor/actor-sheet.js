@@ -24,8 +24,17 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     for (let attr of Object.values(data.data.attributes)) {
       attr.isCheckbox = attr.dtype === "Boolean";
     }
+
+    // Prepare items.
+    if (this.actor.data.type == 'character') {
+      this._prepareCharacterItems(data);
+    }
+
     return data;
   }
+  
+
+
 
   /** @override */
   activateListeners(html) {
@@ -53,6 +62,24 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
+    
+    // profesion show.
+    html.find('.profesion').click( ev => {
+     const profesion = this.actor.data.items.find(i => i.type == "profesion");
+     if(profesion){
+         const item = this.actor.getOwnedItem(profesion._id);
+         item.sheet.render(true);
+     }
+    });
+    // profesion show.
+    html.find('.reputation').click( ev => {
+     const reputation = this.actor.data.items.find(i => i.type == "reputation");
+     if(reputation){
+         const item = this.actor.getOwnedItem(reputation._id);
+         item.sheet.render(true);
+     }
+    });
+    
   }
 
   /* -------------------------------------------- */
@@ -168,6 +195,64 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     }
 
     
+  }
+  
+  /**
+   * Organize and classify Items for Character sheets.
+   *
+   * @param {Object} actorData The actor to prepare.
+   *
+   * @return {undefined}
+   */
+  _prepareCharacterItems(sheetData) {
+    const actorData = sheetData.actor;
+
+    // Initialize containers.
+    const gear = [];
+    const profesion = [];
+    const reputation = [];
+    const weapon = [];
+    const scar = [];
+    const mean = [];
+
+    // Iterate through items, allocating to containers
+    // let totalWeight = 0;
+    for (let i of sheetData.items) {
+      let item = i.data;
+      i.img = i.img || DEFAULT_TOKEN;
+      // Append to gear.
+      if (i.type === 'item') {
+        gear.push(i);
+      }
+      // Append to profesion.
+      else if (i.type === 'profesion') {
+        profesion.push(i);
+      }
+      // Append to reputation.
+      else if (i.type === 'reputation') {
+        reputation.push(i);
+      }
+      // Append to weapons.
+      else if (i.type === 'weapon') {
+        weapon.push(i);
+      }
+      // Append to scar.
+      else if (i.type === 'scar') {
+        scar.push(i);
+      }
+      // Append to mean.
+      else if (i.type === 'mean') {
+        mean.push(i);
+      }
+    }
+
+    // Assign and return
+    actorData.gear = gear;
+    actorData.profesion = profesion;
+    actorData.reputation = reputation;
+    actorData.weapon = weapon;
+    actorData.scar = scar;
+    actorData.mean = mean;
   }
 
 }
