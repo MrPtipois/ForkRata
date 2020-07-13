@@ -2,9 +2,9 @@
   "name": "ratasenlasparedes",
   "title": "Ratas en las paredes",
   "description": "Ratas en las paredes para FoundryVTT!",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "minimumCoreVersion": "0.6.2",
-  "compatibleCoreVersion": "0.6.4",
+  "compatibleCoreVersion": "0.6.5",
   "templateVersion": 2,
   "author": "jvir",
   "esmodules": ["module/ratasenlasparedes.js"],
@@ -44,6 +44,13 @@
 			"label": "Reputaciones",
 			"system": "ratasenlasparedes",
 			"path": "./packs/reputaciones.db",
+			"entity": "Item"
+		},
+		        {
+			"name": "hechizos",
+			"label": "Hechizos",
+			"system": "ratasenlasparedes",
+			"path": "./packs/hechizos.db",
 			"entity": "Item"
 		},
 		        {

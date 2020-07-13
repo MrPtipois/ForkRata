@@ -4,11 +4,14 @@
 **Este sistema es un trabajo en progreso y actualmente permite:**
 - Realizar tiradas de atributos y armas.
 - Se pueden hacer tiradas faciles o dificiles manteniendo pulsadas las teclas Shift y Control respectivamente mientrass hacemos click.
+- Autocalculo de maxPV y maxPC.
 - Incluye compendios de:
 -- Equipo.
- -- Armas.
- -- Profesiones.
- -- Reputaciones.
+-- Armas.
+-- Profesiones.
+-- Reputaciones.
+-- Hechizos.
+- Estilo polaroid para la videoconferencia.
 
 
 ### Agradecimientos e información

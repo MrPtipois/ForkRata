@@ -20,24 +20,30 @@ export class ratasenlasparedesActor extends Actor {
   }
 
   /**
-   * Prepare Character type specific data
+   * Prepare Character type specific data 
    */
   _prepareCharacterData(actorData) {
     const data = actorData.data;
     
     // Make modifications to data here
     data.pv.max = 10 + data.abilities.mus.value;
-    data.pc.max = 10 + data.abilities.vol.value;
     
     
     let profesions = actorData.items.filter(i => i.type == "profesion");
     if (profesions.length>0) data.profesion = profesions[0].name;
     let reputations = actorData.items.filter(i => i.type == "reputation");
     if (reputations.length>0) data.reputation = reputations[0].name;
-    //console.log(profesions);
     
+    let spells = actorData.items.filter(i => i.type == "spell");
+    if (spells.length > 0 && this.getFlag("ratasenlasparedes", "hasSpells")!=true){
+        this.setFlag("ratasenlasparedes", "hasSpells", true);
+    }else if (spells.length <= 0 && this.getFlag("ratasenlasparedes", "hasSpells")) {
+        this.unsetFlag("ratasenlasparedes", "hasSpells", false);
+    }
+    
+    data.pc.max = 10 + data.abilities.vol.value - spells.length;
   }
   
 
-
+  
 }

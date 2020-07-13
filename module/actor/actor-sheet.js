@@ -214,6 +214,7 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     const weapon = [];
     const scar = [];
     const mean = [];
+    const spell = [];
 
     // Iterate through items, allocating to containers
     // let totalWeight = 0;
@@ -244,6 +245,10 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
       else if (i.type === 'mean') {
         mean.push(i);
       }
+      // Append to spell.
+      else if (i.type === 'spell') {
+        spell.push(i);
+      }
     }
 
     // Assign and return
@@ -253,6 +258,7 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     actorData.weapon = weapon;
     actorData.scar = scar;
     actorData.mean = mean;
+    actorData.spell = spell;
   }
 
 }

@@ -1,13 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap");
+@font-face {
+  font-family: Tox;
+  src: url("/systems/ratasenlasparedes/fonts/Tox/Tox.ttf");
+}
+
 /* Global styles */
 .window-app {
-  font-family: "Roboto", sans-serif;
+  font-family: "Crimson", sans-serif;
 }
 
 .rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
+}
+
+/*test cameras*/
+.camera-view {
+  background-image: none;
+  background: #fafafa;
+  border: 0px;
+}
+
+.user-camera {
+  -webkit-box-shadow: 0 0 1px #222;
+  box-shadow: 0 0 1px #222;
+}
+
+.player-name {
+  background-color: #fafafa !important;
+  border: 0px !important;
+  color: black;
+  font-family: Tox;
 }
 
 .grid,
@@ -118,6 +143,7 @@
 .ratasenlasparedes .window-content {
   background-image: url("/systems/ratasenlasparedes/img/back.jpg");
   background-size: 100%;
+  font-family: Tox;
 }
 
 .ratasenlasparedes .basic-data {
@@ -217,7 +243,7 @@
 }
 
 .ratasenlasparedes .item-form {
-  font-family: "Roboto", sans-serif;
+  font-family: "Crimson", sans-serif;
 }
 
 .ratasenlasparedes .sheet-header {
