@@ -35,6 +35,16 @@
   font-family: Tox;
 }
 
+#player-list .player-name {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+/* board */
+#board {
+  background-color: black;
+}
+
 .grid,
 .grid-2col {
   display: grid;

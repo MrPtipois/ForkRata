@@ -1,6 +1,9 @@
 {
   "Actor": {
-    "types": ["character"],
+    "types": [
+      "character",
+      "npc"
+    ],
     "templates": {
       "base": {
         "pc": {
@@ -47,6 +50,12 @@
           "value": 0
         }
       }
+    },
+    "npc": {
+      "templates": ["base"],
+      "profesion": "",
+      "reputation": "",
+      "biography": ""
     }
   },
   "Item": {

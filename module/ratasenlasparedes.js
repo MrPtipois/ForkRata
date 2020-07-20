@@ -1,6 +1,7 @@
 // Import Modules
 import { ratasenlasparedesActor } from "./actor/actor.js";
 import { ratasenlasparedesActorSheet } from "./actor/actor-sheet.js";
+import { ratasenlasparedesNpcSheet } from "./actor/npc-sheet.js";
 import { ratasenlasparedesItem } from "./item/item.js";
 import { ratasenlasparedesItemSheet } from "./item/item-sheet.js";
 
@@ -25,10 +26,20 @@ Hooks.once('init', async function() {
   CONFIG.Item.entityClass = ratasenlasparedesItem;
 
   // Register sheet application classes
+  Actors.registerSheet("ratasenlasparedes", ratasenlasparedesActorSheet, { 
+      types: ['character'], 
+      makeDefault: true 
+    });
+  Actors.registerSheet("ratasenlasparedes", ratasenlasparedesNpcSheet, { 
+      types: ['npc'], 
+      makeDefault: true
+    });  
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("ratasenlasparedes", ratasenlasparedesActorSheet, { makeDefault: true });
+  
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("ratasenlasparedes", ratasenlasparedesItemSheet, { makeDefault: true });
+  
+  document.getElementById("logo").src="/systems/ratasenlasparedes/img/thp.png";
 
   // If you need to add Handlebars helpers, here are a few useful examples:
   Handlebars.registerHelper('concat', function() {
@@ -57,5 +68,54 @@ Hooks.on('createOwnedItem', (actor, item) => {
     }
     if(item.type == "reputation" && reputations.length>1){
         actor.deleteOwnedItem(reputations[0]._id);
+    }
+});
+
+Hooks.on("preCreateScene", (createData, options, userID) => {
+    createData.backgroundColor = '#000000';
+})
+
+
+/* hide ui elements on logo click */
+Hooks.on('ready', () => {
+    $('#logo').click(ev => {
+        window.hideUI = !window.hideUI;
+        if (window.hideUI) {
+            $('#sidebar').hide();
+            $('#navigation').hide();
+            $('#controls').hide();
+            $('#players').hide();
+            $('#hotbar').hide();
+        } else {
+            $('#sidebar').show();
+            $('#navigation').show();
+            $('#controls').show();
+            $('#players').show();
+            $('#hotbar').show();
+        }
+    });
+});
+
+Hooks.on('renderSceneNavigation', (app,html) => {
+    if (window.hideUI) {
+        html.hide();
+    }
+});
+
+Hooks.on('renderSceneControls', (app, html) => {
+    if (window.hideUI) {
+        html.hide();
+    }
+});
+
+Hooks.on('renderSidebarTab', (app, html) => {
+    if (window.hideUI) {
+        html.hide();
+    }
+});
+
+Hooks.on('renderCombatTracker', (app, html) => {
+    if (window.hideUI) {
+        html.hide();
     }
 });

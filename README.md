@@ -12,6 +12,9 @@
 -- Reputaciones.
 -- Hechizos.
 - Estilo polaroid para la videoconferencia.
+- Hoja de PnJ
+- Estilos varios, Escenas con background negro por defecto, logo personalizado, etc.
+- Click en logo para ocultar elementos de la Interfaz.
 
 
 ### Agradecimientos e información

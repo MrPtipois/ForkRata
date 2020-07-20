@@ -18,6 +18,25 @@ export class ratasenlasparedesActor extends Actor {
     // things organized.
     if (actorData.type === 'character') this._prepareCharacterData(actorData);
   }
+   /* -------------------------------------------- */
+    /*  Socket Listeners and Handlers
+    /* -------------------------------------------- */
+    /** @override */
+    static async create(data, options = {}) {
+        let link = true;
+        if (data.type === 'npc') {
+            link = false;
+        }
+        data.token = data.token || {};
+        mergeObject(data.token, {
+            vision: true,
+            dimSight: 30,
+            brightSight: 0,
+            actorLink: link,
+            disposition: 1,
+        });
+        return super.create(data, options);
+    }
 
   /**
    * Prepare Character type specific data 
@@ -26,7 +45,6 @@ export class ratasenlasparedesActor extends Actor {
     const data = actorData.data;
     
     // Make modifications to data here
-    data.pv.max = 10 + data.abilities.mus.value;
     
     
     let profesions = actorData.items.filter(i => i.type == "profesion");
@@ -41,7 +59,12 @@ export class ratasenlasparedesActor extends Actor {
         this.unsetFlag("ratasenlasparedes", "hasSpells", false);
     }
     
+    
+    data.pv.max = 10 + data.abilities.mus.value;
     data.pc.max = 10 + data.abilities.vol.value - spells.length;
+    
+    data.pc.value = Math.min(data.pc.value, data.pc.max);
+    data.pv.value = Math.min(data.pv.value, data.pv.max);
   }
   
 
