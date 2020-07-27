@@ -2,7 +2,7 @@
   "name": "ratasenlasparedes",
   "title": "Ratas en las paredes",
   "description": "Ratas en las paredes para FoundryVTT!",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "minimumCoreVersion": "0.6.2",
   "compatibleCoreVersion": "0.6.5",
   "templateVersion": 2,
@@ -59,6 +59,13 @@
 			"system": "ratasenlasparedes",
 			"path": "./packs/tablas.db",
 			"entity": "RollTable"
+		},
+		        {
+			"name": "antagonistas",
+			"label": "Antagonistas",
+			"system": "ratasenlasparedes",
+			"path": "./packs/antagonistas.db",
+			"entity": "Actor"
 		}
   ],
   "languages": [

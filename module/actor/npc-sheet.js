@@ -32,8 +32,8 @@ export class ratasenlasparedesNpcSheet extends ActorSheet {
     data.dtypes = ["String", "Number", "Boolean"];
 
     // Prepare items.
-    if (this.actor.data.type == 'character') {
-      //////this._prepareCharacterItems(data);
+    if (this.actor.data.type == 'npc') {
+      this._prepareCharacterItems(data);
     }
 
     return data;
@@ -66,7 +66,7 @@ export class ratasenlasparedesNpcSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
-
+    html.find('.rollable').click(this._onRoll.bind(this));
     
     // profesion show.
     html.find('.profesion').click( ev => {
@@ -115,7 +115,99 @@ export class ratasenlasparedesNpcSheet extends ActorSheet {
     // Finally, create the item!
     return this.actor.createOwnedItem(itemData);
   }
+  
+  /**
+   * Organize and classify Items for Character sheets.
+   *
+   * @param {Object} actorData The actor to prepare.
+   *
+   * @return {undefined}
+   */
+  _prepareCharacterItems(sheetData) {
+    const actorData = sheetData.actor;
+
+    // Initialize containers.
+    const gear = [];
+    const profesion = [];
+    const reputation = [];
+    const weapon = [];
+    const scar = [];
+    const mean = [];
+    const spell = [];
+
+    // Iterate through items, allocating to containers
+    // let totalWeight = 0;
+    for (let i of sheetData.items) {
+      let item = i.data;
+      i.img = i.img || DEFAULT_TOKEN;
+      // Append to gear.
+      if (i.type === 'item') {
+        gear.push(i);
+      }
+      // Append to profesion.
+      else if (i.type === 'profesion') {
+        profesion.push(i);
+      }
+      // Append to reputation.
+      else if (i.type === 'reputation') {
+        reputation.push(i);
+      }
+      // Append to weapons.
+      else if (i.type === 'weapon') {
+        weapon.push(i);
+      }
+      // Append to scar.
+      else if (i.type === 'scar') {
+        scar.push(i);
+      }
+      // Append to mean.
+      else if (i.type === 'mean') {
+        mean.push(i);
+      }
+      // Append to spell.
+      else if (i.type === 'spell') {
+        spell.push(i);
+      }
+    }
+
+    // Assign and return
+    actorData.gear = gear;
+    actorData.profesion = profesion;
+    actorData.reputation = reputation;
+    actorData.weapon = weapon;
+    actorData.scar = scar;
+    actorData.mean = mean;
+    actorData.spell = spell;
+  }
 
 
+  /**
+   * Handle clickable rolls.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onRoll(event) {
+    event.preventDefault();
+    console.log(event.currentTarget);
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    const rollType = dataset.rollType;
+    
+    
+    if (rollType == "weapon") {
+            let damageRoll = new Roll(dataset.damage, this.actor.data.data);
+            let label = dataset.label ? `Usa su ${dataset.label}.` : '';
+            let damageResult = damageRoll.roll();
+
+                
+                damageResult.toMessage({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor: 'Daño'
+                    });
+        
+    }
+
+    
+  }
 
 }

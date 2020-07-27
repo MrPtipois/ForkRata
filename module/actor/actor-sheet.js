@@ -44,8 +44,9 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     if (!this.options.editable) return;
 
     // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
-
+    //html.find('.item-create').click(this._onItemCreate.bind(this));
+    html.find('.item-create').click(ev => this._onCreate(ev));
+    
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");

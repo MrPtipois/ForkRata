@@ -11,6 +11,7 @@
 -- Profesiones.
 -- Reputaciones.
 -- Hechizos.
+-- Antagonistas.
 - Estilo polaroid para la videoconferencia.
 - Hoja de PnJ
 - Estilos varios, Escenas con background negro por defecto, logo personalizado, etc.
