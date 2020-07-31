@@ -12,6 +12,7 @@
 -- Reputaciones.
 -- Hechizos.
 -- Antagonistas.
+-- Horreres tras los muros de la cordura (gracias a Draven).
 - Estilo polaroid para la videoconferencia.
 - Hoja de PnJ
 - Estilos varios, Escenas con background negro por defecto, logo personalizado, etc.
