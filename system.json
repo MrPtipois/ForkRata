@@ -72,7 +72,7 @@
 			"label": "Horrores tras los muros de la cordura",
 			"system": "ratasenlasparedes",
 			"path": "./packs/horrores-tras-los-muros-de-la-cordura.db",
-			"entity": "Atcor"
+			"entity": "Actor"
 		}
   ],
   "languages": [
