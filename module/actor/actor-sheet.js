@@ -119,7 +119,7 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
    */
   _onRoll(event) {
     event.preventDefault();
-    console.log(event.currentTarget);
+//     console.log(event.currentTarget);
     const element = event.currentTarget;
     const dataset = element.dataset;
     const rollType = dataset.rollType;
@@ -143,11 +143,18 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
                 rollString = dataset.roll;
             }
             let roll = new Roll(rollString, this.actor.data.data);
-            let label = dataset.label ? `Realiza una tirada ${difficulty[1]} de ${dataset.label}` : '';
-            roll.roll().toMessage({
-                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor: label
-            });
+            let label = dataset.label ? `Realiza una tirada <strong>${difficulty[1]}</strong> de <strong>${dataset.label}</strong>` : '';
+            let rollResult = roll.roll();
+            let goal; //TODO: Implementar goal
+            
+            let messageData = {
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                    flags: {'ratasenlasparedes':{'text':label, 'goal':goal, 'detail': rollResult.result}}
+                };
+            
+            
+                rollResult.toMessage(messageData);
+ 
         }
     }
     
@@ -156,42 +163,60 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
         if (dataset.roll) {
             if (difficulty[0] != "0") {
                 rollString = dataset.roll + ' ' + difficulty[0];
-                difficultyString = ` en una situación ${difficulty[1]}`;
+                difficultyString = ` en una situación <strong>${difficulty[1]}</strong>`;
             }else{
                 rollString = dataset.roll;
             }
             let roll = new Roll(rollString, this.actor.data.data);
             let damageRoll = new Roll(dataset.damage, this.actor.data.data);
-            let label = dataset.label ? `Usa su ${dataset.label} ${difficultyString}.` : '';
+            let label = dataset.label ? `Usa su <strong>${dataset.label}</strong> ${difficultyString}.` : '';
             let attackResult = roll.roll();
-            let damageResult = damageRoll.roll();
-            let showDamage = false;
-            console.log (attackResult._total);
+            let goal;
+
             
-            if (attackResult._total <= 7){
-                label += ` Falla y sufre dos <a class="entity-link" draggable="true" data-entity="JournalEntry" data-id="1WWvPB8D9WDiEn5Q"><i class="fas fa-book-open"></i> Consecuencias</a>.`;
+            if (attackResult._total <= 7){ /*@Compendium[ratasenlasparedes.ayudas.8eZa50wvErHt4ONd]{Consecuencias}*/
+                label += ` <strong>Falla</strong> y sufre <a class="entity-link" data-pack="ratasenlasparedes.ayudas" data-lookup="Consecuencias" draggable="true"><i class="fas fa-book-open"></i> dos Consecuencias}</a>.`;
+                goal = "Fallo";
             } else if (attackResult._total <= 9){
-                label += ` Acierta, pero sufre una <a class="entity-link" draggable="true" data-entity="JournalEntry" data-id="1WWvPB8D9WDiEn5Q"><i class="fas fa-book-open"></i> Consecuencia</a>.`;
-                showDamage = true;
+                label += ` Tiene <strong>éxito</strong>, pero sufre <a class="entity-link" data-pack="ratasenlasparedes.ayudas" data-lookup="Consecuencias" draggable="true"><i class="fas fa-book-open"></i> una Consecuencia</a>`;
+                goal = "Parcial";
             } else if (attackResult._total <= 11){
-                label += ` Acierta y elige una <a class="entity-link" draggable="true" data-entity="JournalEntry" data-id="1WWvPB8D9WDiEn5Q"><i class="fas fa-book-open"></i> Consecuencia</a> para su objetivo.`;
-                showDamage = true;
+                label += ` Tiene <strong>éxito</strong> y elige <a class="entity-link" data-pack="ratasenlasparedes.ayudas" data-lookup="Consecuencias" draggable="true"><i class="fas fa-book-open"></i> una Consecuencia</a> para su objetivo.`;
+                goal = "Exito";
             } else {
-                label += ` Acierta y elige dos <a class="entity-link" draggable="true" data-entity="JournalEntry" data-id="1WWvPB8D9WDiEn5Q"><i class="fas fa-book-open"></i> Consecuencias</a> para su objetvo.`;
-                showDamage = true;
+                label += ` Tiene <strong>éxito</strong> y elige <a class="entity-link" data-pack="ratasenlasparedes.ayudas" data-lookup="Consecuencias" draggable="true"><i class="fas fa-book-open"></i> dos Consecuencias</a> para su objetvo.`;
+                goal = "!Oh sí!";
             }
             
-                attackResult.toMessage({
+            let attackData = {
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flags: {'ratasenlasparedes':{'text':label, 'goal':goal, 'detail': attackResult.result}}
+            };
+            
+            attackResult.toMessage(attackData);
+
+        }
+    }
+    
+    if (rollType == "damage") {
+        if (dataset.roll) {
+            rollString = dataset.roll;
+            let roll = new Roll(rollString);
+            let label = dataset.label ? `Causa daño con su <strong>${dataset.label}</strong>.` : '';
+            let attackResult = roll.roll();
+            //let damageResult = damageRoll.roll();
+//             let showDamage = false;
+            let goal;
+            let rolls = attackResult.parts[0].rolls.reduce((a, b) => a + ' + ' + b); console.log(rolls);
+                // console.log(attackResult);
+                console.log(attackResult.parts);
+                let attackData = {
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                    flavor: label
-                });
+                    flags: {'ratasenlasparedes':{'text':label, 'goal':goal}}
+                };
                 
-                if (showDamage) {
-                    damageResult.toMessage({
-                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                        flavor: 'Daño'
-                    });
-                }
+            attackResult.toMessage(attackData);
+            
         }
     }
 

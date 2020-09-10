@@ -1,0 +1,39 @@
+<li class="message flexcol {{cssClass}}" data-message-id="{{message._id}}" style="box-sizing: border-box; border-width:10px; border-bottom-width:30px; border-image-source:url('/systems/ratasenlasparedes/img/chat/border.png'); border-image-slice:10 10 60 10; font-family:tox;">
+    <header class="message-header flexrow" style=" border-bottom: solid 3px #8a0303">
+        <img class = "chat-profile-image" src="{{message.flags.ratasenlasparedes.profileImg}}" title="{{alias}}" height="25px" style="flex-grow: 0; margin-bottom:2px; border: none;"/>
+
+        <h4 class="message-sender" style="font-family:tox; padding-left:5px;"> {{alias}}</h4>
+        
+        <span class="message-metadata">
+            <time class="message-timestamp">{{timeSince message.timestamp}}</time>
+            {{#if user.isGM}}
+            <a class="button message-delete"><i class="fas fa-trash"></i></a>
+            {{/if}}
+        </span>
+
+        {{#if isWhisper}}
+        <span class="whisper-to">{{localize 'CHAT.To'}}: {{whisperTo}}</span>
+        {{/if}}
+
+        {{#if message.flavor}}
+        <span class="flavor-text">{{{message.flavor}}} {{message.text}}</span>
+        {{/if}}
+    </header>
+    <div class="message-content" style="padding-top:5px;">
+    
+            <div class="chat-roll-text" style="font-size:15px;margin-top:5px;margin-bottom:5px;">{{{message.flags.ratasenlasparedes.text}}}</div>
+            
+            <div class="chat-roll-info flexrow flex-between" style="justify-content: space-around; font-family: tox; outline: none; border-color: black; box-shadow: 0 0 15px -15px black;">    
+                <div class="roll-info-attribute">    
+                    <div class="chat-roll-content flexrow flex-between" style="justify-content: space-around; font-family: tox;">
+                        <div class="chat-roll-main-explain" style="font-size:20px;text-align: center;">{{{message.flags.ratasenlasparedes.detail}}}</div>
+                    </div>
+                    <div class="chat-roll-content flexrow flex-between" style="justify-content: space-around; font-family: tox;">
+                        <div class="chat-roll-main-explain" style="font-size:20px;text-align: center;">{{{message.flags.ratasenlasparedes.goal}}}</div>
+                    </div>
+                </div>
+            </div>    
+            
+        {{{message.content}}}
+    </div>
+</li>

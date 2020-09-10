@@ -20,7 +20,11 @@ Hooks.once('init', async function() {
     formula: "1d6",
     decimals: 2
   };
-
+  
+  // Define chat templateData
+  CONFIG.ChatMessage.template = "systems/ratasenlasparedes/templates/chat/chat-message.html";
+  CONFIG.Dice.template = "systems/ratasenlasparedes/templates/dice/roll.html";
+  CONFIG.Dice.tooltip = "systems/ratasenlasparedes/templates/dice/tooltip.html";
   // Define custom Entity classes
   CONFIG.Actor.entityClass = ratasenlasparedesActor;
   CONFIG.Item.entityClass = ratasenlasparedesItem;
@@ -40,7 +44,7 @@ Hooks.once('init', async function() {
   Items.registerSheet("ratasenlasparedes", ratasenlasparedesItemSheet, { makeDefault: true });
   
   document.getElementById("logo").src="/systems/ratasenlasparedes/img/thp.png";
-
+    
   // If you need to add Handlebars helpers, here are a few useful examples:
   Handlebars.registerHelper('concat', function() {
     var outStr = '';
@@ -55,6 +59,10 @@ Hooks.once('init', async function() {
   Handlebars.registerHelper('toLowerCase', function(str) {
     return str.toLowerCase();
   });
+});
+
+Handlebars.registerHelper('json', function(context) {
+    return JSON.stringify(context);
 });
 
 Hooks.on('createOwnedItem', (actor, item) => {
@@ -94,6 +102,43 @@ Hooks.on('ready', () => {
             $('#hotbar').show();
         }
     });
+    
+    $('#chat-controls .roll-type-select .fa-dice-d20').addClass("fa-dice-d6");
+    $('#chat-controls .roll-type-select .fa-dice-d20').removeClass("fa-dice-d20");
+    
+    
+
+    $(document).on('click', '#chat-controls .roll-type-select .fa-dice-d6', ev => {
+        const dialogOptions = {
+            width: 420,
+            top: event.clientY - 80,
+            left: window.innerWidth - 710,
+            classes: ['dialog', 'ratas-dice-roller']
+        };
+        let templateData = {
+            title: 'test'
+        };
+        // Render the modal.
+      renderTemplate('systems/ratasenlasparedes/templates/roller.html', templateData).then(dlg => {
+        new Dialog({
+          title: 'Lanzador',
+          content: dlg,
+          buttons: {
+//             close: {
+//               label: 'd3-3',
+//               callback: () => console.log("Cerrado ratas-simple-dice-roller")
+//             }
+          }
+        }, dialogOptions).render(true);
+      });  
+    });
+    
+    $(document).on('click', '.ratas-simple-roller-roll', ev => {
+        let roll = new Roll(String($(ev.currentTarget).data('formula')));
+        roll.roll();
+        roll.toMessage();
+    });
+          
 });
 
 Hooks.on('renderSceneNavigation', (app,html) => {
@@ -119,3 +164,53 @@ Hooks.on('renderCombatTracker', (app, html) => {
         html.hide();
     }
 });
+
+
+//Chat Messages
+Hooks.on("createChatMessage", async (chatMSG, flags, userId) => {
+
+    
+    
+//         chatMSG.setFlag("ratasenlasparedes", "actorImg", "/manuel.jpg");
+     console.log(chatMSG._roll.parts);
+//     let linear = chatMSG._roll.parts.filter((part) => part.rolls !== undefined).map(part => part.rolls.reduce(function(a, rolls){a.push(rolls.roll); return a;}, []));
+     
+     let linearDices = [];
+     let linearMods = [];
+     chatMSG._roll.parts.forEach(
+         function(part){
+             if (part.rolls !== undefined){
+                 part.rolls.forEach(roll => linearDices.push(roll.roll));
+             }else{
+                 linearMods.push(part);
+             }
+         }
+    );
+
+    let linearRoll = linearDices.join(' + ') + ' ' + linearMods.join(' ');
+    
+    
+
+
+    let actor = game.actors.entries.find(actor => actor._id == chatMSG.data.speaker.actor);
+    chatMSG.setFlag("ratasenlasparedes", "profileImg", actor ? actor.data.img : game.user.avatar);
+    chatMSG.setFlag("ratasenlasparedes", "detail", linearRoll);
+//     console.log(actor);
+    
+    let messageId = chatMSG.data._id;
+    let msg = game.messages.get(messageId);
+    let msgIndex = game.messages.entities.indexOf(msg);
+    
+    if (chatMSG.isRoll && chatMSG.isContentVisible) {
+      let rollData = {
+            flavor: "Roll",
+            formula: chatMSG._roll.formula,
+            username: game.user.name,
+        };
+        console.log(rollData);
+    }
+
+
+});
+
+

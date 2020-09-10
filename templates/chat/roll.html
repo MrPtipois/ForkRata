@@ -1,0 +1,103 @@
+<div class="chat-roll">
+    <div class="chat-roll-header flexrow flex-between" style="align-items: end; font-family: tox; outline: none; border-bottom: solid 3px #8a0303">
+        {{#if actorImg}}
+            <img class = "chat-actor-image" src="{{actorImg}}" title="{{actorName}}" height="25px" style="flex-grow: 0; margin-bottom:2px; border: none;"/>
+        {{else}}
+            <img class = "chat-actor-image" src="{{userImg}}" title="{{actorName}}" height="25px" style="flex-grow: 0; margin-bottom:2px; border: none;"/>
+        {{/if}}
+        {{#if actorName}}
+            <div class="chat-actor-name" style="margin-left: 10px; font-size:20px;">{{actorName}}</div>
+        {{else}}
+            <div class="chat-actor-name" style="margin-left: 10px; font-size:20px;">{{userName}}</div>
+        {{/if}}
+        <span class="roll-delete-button">
+            {{#if game.user.isGM }} {#TODO ver sie s GM#}
+                <a class="roll-message-delete"><i class="fas fa-trash"></i></a>
+            {{/if}}
+        </span>
+    </div>
+                <div class="chat-roll-text" style="font-size:15px;margin-top:5px;margin-bottom:5px;">{{{ text }}}</div>
+
+    <div class="chat-roll-info flexrow flex-between" style="justify-content: space-around; font-family: tox; outline: none; border-color: black; box-shadow: 0 0 15px -15px black;">    
+        <div class="roll-info-attribute">    
+            <div class="chat-roll-content flexrow flex-between" style="justify-content: space-around; font-family: tox;">
+                <div class="chat-roll-main-explain" style="font-size:20px;text-align: center;">{{ detail }}</div>
+            </div>
+            <div class="chat-roll-content flexrow flex-between" style="justify-content: space-around; font-family: tox;">
+                <div class="chat-roll-main-explain" style="font-size:20px;text-align: center;">{{goal}}</div>
+            </div>
+        </div>
+        {{#if showDamage }}
+            <div class="roll-info-damage">    
+                <div class="chat-roll-content flexrow flex-between" style="justify-content: space-around; font-family: tox;">
+                    <div class="chat-roll-main-explain" style="font-size:20px;text-align: center;">{{ damageDetail }}</div>
+                </div>
+                <div class="chat-roll-content flexrow flex-between" style="justify-content: space-around; font-family: tox;">
+                    <div class="chat-roll-main-explain" style="font-size:20px;text-align: center;">Daño</div>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    
+    
+    <div class="chat-roll-content flexrow flex-between" style="justify-content: space-around; font-family: tox; border-bottom: solid 1px red;">
+        <div class="chat-roll-main-explain" style="font-size:80px;flex-grow:0;min-width:100px;height:100px; text-align: center; line-height: 100px; margin: 10px 0;outline: none;
+        border-color: black; box-shadow: 0 0 15px black;background-image:url('systems/ratasenlasparedes/img/chat/blood5.png'); background-size:cover;">{{ result }}</div>
+        
+        {{#if rolls}}
+            {{#each rolls}}
+                <li class="roll ">{{{roll}}}</li>
+            {{/each}}
+        {{/if}}
+        
+        {{#if showDamage }}
+        <div class="chat-roll-main-explain" style="font-size:80px;flex-grow:0;min-width:100px;height:100px; text-align: center; line-height: 100px; margin: 10px 0;outline: none;
+        border-color: black; box-shadow: 0 0 15px black;background-image:url('systems/ratasenlasparedes/img/chat/blood5.png'); background-size:cover;">{{ damageResult }}</div>
+        {{/if}}
+    </div>
+    
+</div>
+
+{{!-- Detalles --}}
+        <div class="roll-detail" style="display:none">
+            <div class="roll-area">
+                <div class="flexrow">
+                    <label class="label-roll">Formula:</label>
+                    <div class="roll-formula">{{{formula}}}</div>
+                </div>
+                <div class="flexrow">
+                    <label class="label-roll">Modifier:</label>
+                    <div class="roll-formula">{{{mod}}}</div>
+                </div>
+                <ol class="roll-list">
+                    {{#each dice as |die key|}}
+                    <li class="flexrow" data-item-id="{{key}}">
+                        <label class="label-roll">{{{die.rolls.length}}}d{{{die.faces}}}:</label>
+                        {{#each die.rolls as |roll id|}}
+                        <div class="flexrow">
+                            <div class="roll-die">{{{roll.roll}}}</div>
+                        </div>
+                        {{/each}}
+                    </li>
+                    {{/each}}
+                </ol>
+                <ol class="roll-list">
+                    {{#each subdice as |subdie key|}}
+                    <li class="roll-flexrow" data-item-id="{{key}}">
+                        <label class="label-roll">{{{subdie.name}}} ({{{subdie.expr}}}):</label>
+                        {{#each subdie.rolls.dice as |subrolldie id|}}
+
+                        {{#each subrolldie.rolls as |subrollresult cid|}}
+                        <div class="roll-die">{{{subrollresult.roll}}}</div>
+                        {{/each}}
+
+                        {{/each}}
+                    </li>
+                    {{/each}}
+                </ol>
+            </div>
+        </div>
+
+
+    {{!--TODO: whispers--}}
+

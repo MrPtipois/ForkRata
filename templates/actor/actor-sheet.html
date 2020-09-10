@@ -29,7 +29,7 @@
                 <input type="text" name="data.abilities.ing.value" value="{{data.abilities.ing.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow">
-                <label for="data.abilities.mus.value" class="resource-label ability-mod rollable" data-roll="2d6+@abilities.mus.value" data-label="muculos" data-roll-type="ability">Músculo</label>
+                <label for="data.abilities.mus.value" class="resource-label ability-mod rollable" data-roll="2d6+@abilities.mus.value" data-label="musculos" data-roll-type="ability">Músculo</label>
                 <input type="text" name="data.abilities.mus.value" value="{{data.abilities.mus.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow">
@@ -98,6 +98,7 @@
                 <li class="item flexrow item-header">
                   <div class="item-image"></div>
                   <div class="item-name">Nombre</div>
+                  <div class="item-name">Daño</div>
                   <div class="item-controls">
                     <a class="item-control item-create create-entity" title="Create item" data-type="item"><i class="fas fa-plus"></i> Añadir</a>
                   </div>
@@ -120,7 +121,11 @@
                 <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                     {{#if item.data.damage}}
-                                        <h4 class="item-name rollable" data-roll="2d6+@abilities.vio.value" data-label="{{item.name}}" data-roll-type="weapon" data-damage="{{item.data.damage}}" >{{item.name}}</h4>
+                                        <h4 class="flexrow">
+                                            <div class="item-name rollable" data-roll="2d6+@abilities.vio.value" data-label="{{item.name}}" data-roll-type="weapon" data-damage="{{item.data.damage}}" >{{item.name}}</div>
+                                            <div class="item-damage rollable" data-roll="{{item.data.damage}}" data-label="{{item.name}}" data-roll-type="damage" style="justify-self:start">({{item.data.damage}})</div>
+                                        </h4>
+                                        
                     {{else}}
                                         <h4 class="item-name">{{item.name}}</h4>
                     {{/if}}

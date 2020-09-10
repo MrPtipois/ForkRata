@@ -19,6 +19,8 @@
 - Hoja de PnJ
 - Estilos varios, Escenas con background negro por defecto, logo personalizado, etc.
 - Click en logo para ocultar elementos de la Interfaz.
+- Estilo de chat personalizado.
+- Lanzador de dados personalizado.
 
 
 ### Agradecimientos e información

@@ -340,6 +340,19 @@
   padding: 0 8px;
 }
 
+.ratasenlasparedes .ratas-dice-roller {
+  background-color: red !important;
+}
+
+.ratasenlasparedes .ratas-dice-roller button {
+  width: 80px !important;
+  min-width: 80px;
+  height: 40px;
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+}
+
 .ratasenlasparedes .resource-label {
   font-weight: bold;
   text-transform: uppercase;
