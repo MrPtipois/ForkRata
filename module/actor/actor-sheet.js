@@ -45,7 +45,7 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
 
     // Add Inventory Item
     //html.find('.item-create').click(this._onItemCreate.bind(this));
-    html.find('.item-create').click(ev => this._onCreate(ev));
+    html.find('.item-create').click(ev => this._onItemCreate(ev));
     
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
@@ -149,7 +149,8 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
             
             let messageData = {
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                    flags: {'ratasenlasparedes':{'text':label, 'goal':goal, 'detail': rollResult.result}}
+                    flags: {'ratasenlasparedes':{'text':label, 'goal':goal, 'detail': rollResult.result}},
+                    flavor: label,
                 };
             
             
@@ -190,7 +191,8 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
             
             let attackData = {
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flags: {'ratasenlasparedes':{'text':label, 'goal':goal, 'detail': attackResult.result}}
+                flags: {'ratasenlasparedes':{'text':label, 'goal':goal, 'detail': attackResult.result}},
+                flavor: label,
             };
             
             attackResult.toMessage(attackData);
@@ -212,7 +214,8 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
                 console.log(attackResult.parts);
                 let attackData = {
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                    flags: {'ratasenlasparedes':{'text':label, 'goal':goal}}
+                    flags: {'ratasenlasparedes':{'text':label, 'goal':goal}},
+                    flavor: label,
                 };
                 
             attackResult.toMessage(attackData);
