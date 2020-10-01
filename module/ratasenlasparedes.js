@@ -112,12 +112,12 @@ Hooks.on('ready', () => {
         }
     });
     
-    $('#chat-controls .roll-type-select .fa-dice-d20').addClass("fa-dice-d6");
-    $('#chat-controls .roll-type-select .fa-dice-d20').removeClass("fa-dice-d20");
+    $('#chat-controls .fa-dice-d20').addClass("fa-dice-d6");
+    $('#chat-controls .fa-dice-d20').removeClass("fa-dice-d20");
     
     
 
-    $(document).on('click', '#chat-controls .roll-type-select .fa-dice-d6', ev => {
+    $(document).on('click', '#chat-controls .fa-dice-d6', ev => {
         const dialogOptions = {
             width: 420,
             top: event.clientY - 80,
