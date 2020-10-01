@@ -86,8 +86,8 @@
     "mean": {
         "templates": ["base"],
         "type": "",
-        "rollable": 0,
-        "roll": ""
+        "value": "",
+        "mod": 0
     },
     "scar": {
         "templates": ["base"]
