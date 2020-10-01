@@ -202,7 +202,16 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     
     if (rollType == "damage") {
         if (dataset.roll) {
-            rollString = dataset.roll;
+            let damageMod = this.actor.data.items.reduce(function (acu, current) {
+                                if (current.data.type == "Efecto" && current.data.value == "Daño") {
+                                    acu += parseInt(current.data.mod);
+                                }
+                                return acu;
+                            }, 0);
+            console.log("Modificador al daño: " + damageMod);
+            
+            damageMod == 0 ? rollString = dataset.roll : rollString = dataset.roll + " + (" + damageMod + ")"; 
+            
             let roll = new Roll(rollString);
             let label = dataset.label ? `Causa daño con su <strong>${dataset.label}</strong>.` : '';
             let attackResult = roll.roll();
@@ -223,7 +232,32 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
         }
     }
 
-    
+    if (rollType == "sanity") {
+        const dialogOptions = {
+            width: 420,
+            top: event.clientY - 80,
+            left: window.innerWidth - 710,
+            classes: ['dialog', 'ratas-dice-roller'],
+        };
+        let templateData = {
+            title: 'Lanzador',
+            rollClass: 'ratas-sanity-check',
+            actorId: this.actor._id
+        };
+        // Render the modal.
+      renderTemplate('systems/ratasenlasparedes/templates/roller.html', templateData).then(dlg => {
+        new Dialog({
+          title: 'Perdida de Cordura',
+          content: dlg,
+          buttons: {
+//             close: {
+//               label: 'd3-3',
+//               callback: () => console.log("Cerrado ratas-simple-dice-roller")
+//             }
+          }
+        }, dialogOptions).render(true);
+      });
+    }
   }
   
   /**

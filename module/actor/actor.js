@@ -58,10 +58,33 @@ export class ratasenlasparedesActor extends Actor {
     }else if (spells.length <= 0 && this.getFlag("ratasenlasparedes", "hasSpells")) {
         this.unsetFlag("ratasenlasparedes", "hasSpells", false);
     }
+    let means = actorData.items.filter(i => i.type == "mean");
+    if (means.length > 0 && this.getFlag("ratasenlasparedes", "hasMeans")!=true){
+        this.setFlag("ratasenlasparedes", "hasMeans", true);
+    }else if (means.length <= 0 && this.getFlag("ratasenlasparedes", "hasMeans")) {
+        this.unsetFlag("ratasenlasparedes", "hasMeans", false);
+    }
     
     
-    data.pv.max = 10 + data.abilities.mus.value;
-    data.pc.max = 10 + data.abilities.vol.value - spells.length;
+    
+    
+    let modPVMax = actorData.items.reduce(function (acu, current) {
+            if (current.data.type == "Efecto" && current.data.value == "PV") {
+                acu += parseInt(current.data.mod);
+            }
+            return acu;
+        }, 0);
+    
+    let modPCMax = actorData.items.reduce(function (acu, current) {
+            if (current.data.type == "Efecto" && current.data.value == "PC") {
+                acu += parseInt(current.data.mod);
+            }
+            return acu;
+        }, 0);
+    
+    
+    data.pv.max = 10 + data.abilities.mus.value + modPVMax;
+    data.pc.max = 10 + data.abilities.vol.value - spells.length + modPCMax;
     
     data.pc.value = Math.min(data.pc.value, data.pc.max);
     data.pv.value = Math.min(data.pv.value, data.pv.max);

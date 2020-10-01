@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="resource flex-group-center">
-                <label for="data.power.value" class="resource-label">PC</label>
+                <label for="data.power.value" class="resource-label rollable" data-roll="custom" data-label="Cordura" data-roll-type="sanity">PC</label>
                 <div class="resource-content flexrow flex-center flex-between">
                   <input type="text" name="data.pc.value" value="{{data.pc.value}}" data-dtype="Number"/>
                   <span> / </span>
@@ -75,8 +75,11 @@
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Bio</a>
-        <!-- <a class="item" data-tab="means">Recursos</a>-->
         
+        {{#if actor.flags.ratasenlasparedes.hasMeans}}
+            <a class="item" data-tab="means">Recursos</a>
+        {{/if}}
+
         <a class="item" data-tab="items">Equipo</a>
         {{#if actor.flags.ratasenlasparedes.hasSpells}}
             <a class="item" data-tab="spells">Hechizos</a>
@@ -150,6 +153,31 @@
                   </div>
                 </li>
             {{#each actor.spell as |item id|}}
+                <li class="item flexrow" data-item-id="{{item._id}}">
+                    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
+                    
+                                        <h4 class="item-name">{{item.name}}</h4>
+                    
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+            {{/each}}
+            </ol>
+        </div>
+        
+        {{!-- Owned Means Tab --}}
+        <div class="tab items" data-group="primary" data-tab="means">
+            <ol class="items-list">
+                <li class="item flexrow item-header">
+                  <div class="item-image"></div>
+                  <div class="item-name">Nombre</div>
+                  <div class="item-controls">
+                    <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Añadir</a>
+                  </div>
+                </li>
+            {{#each actor.mean as |item id|}}
                 <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                     
