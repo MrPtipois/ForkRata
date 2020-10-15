@@ -6,7 +6,7 @@ import { ratasenlasparedesItem } from "./item/item.js";
 import { ratasenlasparedesItemSheet } from "./item/item-sheet.js";
 
 
-Hooks.once('setup', async function() {
+Hooks.once('init', async function() {
   CONFIG.ChatMessage.template = "systems/ratasenlasparedes/templates/chat/chat-message.html";
   CONFIG.Dice.template = "systems/ratasenlasparedes/templates/dice/roll.html";
   CONFIG.Dice.tooltip = "systems/ratasenlasparedes/templates/dice/tooltip.html";

@@ -23,9 +23,6 @@
 - Lanzador de dados personalizado.
 - Experiencia (parcialmente implementado).
 
-###Problemas conocidos
-- El renderizado de los mensajes de chat usando la URL /stream utiliza las plantillas por defecto en ligar de las personalizadas.
-
 
 ### Agradecimientos e información
 
