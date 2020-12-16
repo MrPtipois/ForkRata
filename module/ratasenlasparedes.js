@@ -235,9 +235,11 @@ Hooks.on("createChatMessage", async (chatMSG, flags, userId) => {
     
 
 
-    let actor = game.actors.entries.find(actor => actor._id == chatMSG.data.speaker.actor);
-    chatMSG.setFlag("ratasenlasparedes", "profileImg", actor ? actor.data.img : game.user.avatar);
-    chatMSG.setFlag("ratasenlasparedes", "detail", linearRoll);
+    if (game.user.isGM){
+        let actor = game.actors.entries.find(actor => actor._id == chatMSG.data.speaker.actor);
+        chatMSG.setFlag("ratasenlasparedes", "profileImg", actor ? actor.data.img : game.user.avatar);
+        chatMSG.setFlag("ratasenlasparedes", "detail", linearRoll);
+    }
 //     console.log(actor);
     
     let messageId = chatMSG.data._id;
