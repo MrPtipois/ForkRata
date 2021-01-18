@@ -217,15 +217,17 @@ Hooks.on("createChatMessage", async (chatMSG, flags, userId) => {
         );
      }else{
          //FVTT 0.7.x
-        chatMSG._roll.terms.forEach(
-            function(term){
-                if (term.results !== undefined){
-                    term.results.forEach(result => linearDices.push(result.result));
-                }else{
-                    linearMods.push(term);
+         if (chatMSG._roll){
+            chatMSG._roll.terms.forEach(
+                function(term){
+                    if (term.results !== undefined){
+                        term.results.forEach(result => linearDices.push(result.result));
+                    }else{
+                        linearMods.push(term);
+                    }
                 }
-            }
-        );
+            );
+         }
      }
 
      
