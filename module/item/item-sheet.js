@@ -24,7 +24,7 @@ export class ratasenlasparedesItemSheet extends ItemSheet {
 
   /** @override */
   getData() {
-    const data = super.getData();
+    const data = super.getData().data;
     return data;
   }
 

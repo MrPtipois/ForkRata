@@ -69,15 +69,15 @@ export class ratasenlasparedesActor extends Actor {
     
     
     let modPVMax = actorData.items.reduce(function (acu, current) {
-            if (current.data.type == "Efecto" && current.data.value == "PV") {
-                acu += parseInt(current.data.mod);
+            if (current.data.data.type == "Efecto" && current.data.data.value == "PV") {
+                acu += parseInt(current.data.data.mod);
             }
             return acu;
         }, 0);
     
     let modPCMax = actorData.items.reduce(function (acu, current) {
-            if (current.data.type == "Efecto" && current.data.value == "PC") {
-                acu += parseInt(current.data.mod);
+            if (current.data.data.type == "Efecto" && current.data.data.value == "PC") {
+                acu += parseInt(current.data.data.mod);
             }
             return acu;
         }, 0);

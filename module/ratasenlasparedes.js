@@ -74,17 +74,17 @@ Handlebars.registerHelper('json', function(context) {
     return JSON.stringify(context);
 });
 
-Hooks.on('createOwnedItem', (actor, item) => {
+Hooks.on('createItem', (sheet, aux, itemId) => {
     //console.log(actor);
     //console.log(item);
-    let profesions = actor.data.items.filter(i => i.type == "profesion");
-    let reputations = actor.data.items.filter(i => i.type == "reputation");
+    let profesions = sheet.actor.items.filter(i => i.type == "profesion");
+    let reputations = sheet.actor.items.filter(i => i.type == "reputation");
     console.log(profesions);
-    if(item.type == "profesion" && profesions.length>1){
-        actor.deleteOwnedItem(profesions[0]._id);
+    if(sheet.data.type == "profesion" && profesions.length>1){
+        sheet.actor.deleteOwnedItem(profesions[0].id);
     }
-    if(item.type == "reputation" && reputations.length>1){
-        actor.deleteOwnedItem(reputations[0]._id);
+    if(sheet.data.type == "reputation" && reputations.length>1){
+        sheet.actor.deleteOwnedItem(reputations[0].id);
     }
 });
 
@@ -204,31 +204,20 @@ Hooks.on("createChatMessage", async (chatMSG, flags, userId) => {
      
      let fvttVersion = game.data.version;
      
-     if (fvttVersion.startsWith("0.6.")) {
-        //FVTT 0.6.X
-        chatMSG._roll.parts.forEach(
-            function(part){
-                if (part.rolls !== undefined){
-                    part.rolls.forEach(roll => linearDices.push(roll.roll));
-                }else{
-                    linearMods.push(part);
-                }
+
+    //FVTT 0.7.x
+    if (chatMSG._roll){
+    chatMSG._roll.terms.forEach(
+        function(term){
+            if (term.results !== undefined){
+                term.results.forEach(result => linearDices.push(result.result));
+            }else{
+                //linearMods.push(term);
             }
-        );
-     }else{
-         //FVTT 0.7.x
-         if (chatMSG._roll){
-            chatMSG._roll.terms.forEach(
-                function(term){
-                    if (term.results !== undefined){
-                        term.results.forEach(result => linearDices.push(result.result));
-                    }else{
-                        linearMods.push(term);
-                    }
-                }
-            );
-         }
-     }
+        }
+    );
+    }
+     
 
      
 
@@ -238,7 +227,7 @@ Hooks.on("createChatMessage", async (chatMSG, flags, userId) => {
 
 
     if (game.user.isGM){
-        let actor = game.actors.entries.find(actor => actor._id == chatMSG.data.speaker.actor);
+        let actor = Array.from(game.actors).find(actor => actor._id == chatMSG.data.speaker.actor);
         chatMSG.setFlag("ratasenlasparedes", "profileImg", actor ? actor.data.img : game.user.avatar);
         chatMSG.setFlag("ratasenlasparedes", "detail", linearRoll);
     }

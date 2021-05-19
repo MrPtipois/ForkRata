@@ -19,7 +19,7 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
 
   /** @override */
   getData() {
-    const data = super.getData();
+    const data = foundry.utils.deepClone(super.getData().data);
     data.dtypes = ["String", "Number", "Boolean"];
     for (let attr of Object.values(data.data.attributes)) {
       attr.isCheckbox = attr.dtype === "Boolean";
@@ -33,6 +33,17 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     return data;
   }
   
+  activateEditor(name, options, initialContent) {//TODO: Custom editor
+    // remove some controls to the editor as the space is lacking
+      console.log(name);
+      console.log(options);
+      console.log(initialContent);
+    if (name == "data.biography") {
+      /*options.toolbar = "styleselect bullist hr table removeFormat save";*/
+    } 
+    super.activateEditor(name, options, initialContent);
+  }
+
 
 
 
@@ -202,14 +213,14 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
     
     if (rollType == "damage") {
         if (dataset.roll) {
-            let damageMod = this.actor.data.items.reduce(function (acu, current) {
-                                if (current.data.type == "Efecto" && current.data.value == "Daño") {
-                                    acu += parseInt(current.data.mod);
+            let damageMod = Array.from(this.actor.data.items).reduce(function (acu, current) {
+                                if (current.data.data.type == "Efecto" && current.data.data.value == "Daño") {
+                                    acu += parseInt(current.data.data.mod);
                                 }
                                 return acu;
                             }, 0);
             console.log("Modificador al daño: " + damageMod);
-            
+            console.log(dataset);
             damageMod == 0 ? rollString = dataset.roll : rollString = dataset.roll + " + (" + damageMod + ")"; 
             
             let roll = new Roll(rollString);
@@ -218,9 +229,9 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
             //let damageResult = damageRoll.roll();
 //             let showDamage = false;
             let goal;
-            let rolls = attackResult.parts[0].rolls.reduce((a, b) => a + ' + ' + b); console.log(rolls);
+            let rolls = attackResult.terms[0].results.reduce((a, b) => a + ' + ' + b); console.log(rolls);
                 // console.log(attackResult);
-                console.log(attackResult.parts);
+                console.log(attackResult.terms);
                 let attackData = {
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                     flags: {'ratasenlasparedes':{'text':label, 'goal':goal}},
@@ -268,8 +279,8 @@ export class ratasenlasparedesActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterItems(sheetData) {
-    const actorData = sheetData.actor;
-
+    const actorData = sheetData;
+console.log(sheetData);
     // Initialize containers.
     const gear = [];
     const profesion = [];

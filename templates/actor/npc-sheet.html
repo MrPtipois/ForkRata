@@ -3,7 +3,7 @@
         <div class="basic-text-fields flexcol">
             <div class="flexrow">
                 <label class="resource-label">Nombre: </label>
-                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'RATASENLASPAREDES.Nombre'}}"/>
+                <input name="name" type="text" value="{{name}}" placeholder="{{localize 'RATASENLASPAREDES.Nombre'}}"/>
             </div>
             <div class="flexrow">
                 <label class="resource-label reputation">Reputación: </label>
@@ -21,7 +21,7 @@
     <div class="attribute-section flexrow">
     
 
-        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="150" width="150"/>
+        <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" height="150" width="150"/>
 
         <div class="derivates">
             <div class="resource flex-group-center">
@@ -62,7 +62,7 @@
 
         {{!-- Biography Tab --}}
         <div class="tab biography" data-group="primary" data-tab="description">
-            {{editor content=data.biography target="data.biography" button=true owner=owner editable=editable}}
+            {{editor content=data.biography target="data.biography" button=true owner=owner editable=true}}
         </div>
 
         {{!-- Owned Items Tab --}}

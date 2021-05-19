@@ -28,7 +28,7 @@ export class ratasenlasparedesNpcSheet extends ActorSheet {
 
   /** @override */
   getData() {
-    const data = super.getData();
+    const data = foundry.utils.deepClone(super.getData().data);
     data.dtypes = ["String", "Number", "Boolean"];
 
     // Prepare items.
@@ -124,7 +124,7 @@ export class ratasenlasparedesNpcSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterItems(sheetData) {
-    const actorData = sheetData.actor;
+    const actorData = sheetData;
 
     // Initialize containers.
     const gear = [];
